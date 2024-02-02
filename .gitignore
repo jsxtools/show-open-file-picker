@@ -1,0 +1,14 @@
+# build output
+*-lock.*
+
+# dependencies
+node_modules/
+
+# logs
+*.log*
+
+# environment variables
+*.env*
+
+# macOS-specific files
+.DS_Store

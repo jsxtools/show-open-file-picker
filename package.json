@@ -1,0 +1,64 @@
+{
+	"$schema": "https://json.schemastore.org/package.json",
+	"name": "show-open-file-picker",
+	"description": "A cross-browser ponyfill or polyfill for showOpenFilePicker",
+	"version": "0.1.0",
+	"type": "module",
+	"license": "(MIT-0)",
+	"exports": {
+		".": {
+			"default": "./showOpenFilePicker.js",
+			"types": "./showOpenFilePicker.d.ts"
+		},
+		"./showOpenFilePicker": {
+			"default": "./showOpenFilePicker.js",
+			"types": "./showOpenFilePicker.js"
+		},
+		"./polyfill": {
+			"default": "./showOpenFilePickerPolyfill.js"
+		},
+		"./package.json": "./package.json"
+	},
+	"main": "showOpenFilePicker.js",
+	"types": "showOpenFilePicker.d.ts",
+	"unpkg": "showOpenFilePickerPolyfill.js",
+	"jsdelivr": "showOpenFilePickerPolyfill.js",
+	"sideEffects": true,
+	"files": [
+		"showOpenFilePicker.js",
+		"showOpenFilePicker.d.ts",
+		"polyfill.js"
+	],
+	"keywords": [
+		"access",
+		"api",
+		"browser",
+		"cross-browser",
+		"dev",
+		"development",
+		"dialog",
+		"es6",
+		"file",
+		"files",
+		"filesystem",
+		"javascript",
+		"js",
+		"open",
+		"picker",
+		"platform",
+		"polyfill",
+		"show",
+		"showOpenFilePicker",
+		"standard",
+		"standards",
+		"support",
+		"system",
+		"upload",
+		"user",
+		"web"
+	],
+	"author": "Jonathan Neal <jonathantneal@hotmail.com>",
+	"bugs": "https://github.com/jsxtools/show-open-file-picker/issues",
+	"homepage": "https://github.com/jsxtools/show-open-file-picker",
+	"repository": "https://github.com/jsxtools/show-open-file-picker.git"
+}
