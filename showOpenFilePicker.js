@@ -1,5 +1,5 @@
 /** @type {import('./showOpenFilePicker.d.ts')['showOpenFilePicker']} */
-export const showOpenFilePicker = globalThis.showOpenFilePicker ?? (() => {
+export const showOpenFilePicker = globalThis.showOpenFilePicker ?? typeof document === 'object' ? (() => {
 	const mapOfFiles = new WeakMap()
 	const prototypeOfFileSystemHandle = FileSystemHandle.prototype
 	const prototypeOfFileSystemFileHandle = FileSystemFileHandle.prototype
@@ -62,4 +62,4 @@ export const showOpenFilePicker = globalThis.showOpenFilePicker ?? (() => {
 			return new Promise(resolveFilePicker)
 		},
 	}.showOpenFilePicker
-})()
+})() : async () => []
