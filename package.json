@@ -2,16 +2,18 @@
 	"$schema": "https://json.schemastore.org/package.json",
 	"name": "show-open-file-picker",
 	"description": "A cross-browser ponyfill or polyfill for showOpenFilePicker",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"type": "module",
 	"license": "(MIT-0)",
 	"exports": {
 		".": {
 			"default": "./showOpenFilePicker.js",
+			"require": "./showOpenFilePicker.cjs",
 			"types": "./showOpenFilePicker.d.ts"
 		},
 		"./showOpenFilePicker": {
 			"default": "./showOpenFilePicker.js",
+			"require": "./showOpenFilePicker.cjs",
 			"types": "./showOpenFilePicker.js"
 		},
 		"./polyfill": {
@@ -25,8 +27,9 @@
 	"jsdelivr": "showOpenFilePickerPolyfill.js",
 	"sideEffects": true,
 	"files": [
-		"showOpenFilePicker.js",
+		"showOpenFilePicker.cjs",
 		"showOpenFilePicker.d.ts",
+		"showOpenFilePicker.js",
 		"polyfill.js"
 	],
 	"keywords": [
