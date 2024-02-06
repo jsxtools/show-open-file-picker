@@ -1,10 +1,12 @@
-/** @type {import('./showOpenFilePicker.d.ts')['showOpenFilePicker']} */
-export const showOpenFilePicker = globalThis.showOpenFilePicker ?? typeof document === 'object' ? (() => {
+/** @type {import('./showOpenFilePicker.d.ts').Ponyfills} */
+export const { showOpenFilePicker, showSaveFilePicker } = globalThis.showOpenFilePicker ?? typeof document === 'object' ? (() => {
 	const mapOfFiles = new WeakMap()
 	const prototypeOfFileSystemHandle = FileSystemHandle.prototype
 	const prototypeOfFileSystemFileHandle = FileSystemFileHandle.prototype
 
 	const input = document.createElement('input')
+	const a = document.createElement('a')
+
 	const getFileHandle = file => {
 		const fileHandle = create(prototypeOfFileSystemFileHandle)
 
@@ -12,7 +14,9 @@ export const showOpenFilePicker = globalThis.showOpenFilePicker ?? typeof docume
 
 		return fileHandle
 	}
+
 	const getAcceptType = type => values(Object(type?.accept)).join(',')
+
 	const resolveFilePicker = (resolve, reject) => {
 		input.click()
 
@@ -51,8 +55,63 @@ export const showOpenFilePicker = globalThis.showOpenFilePicker ?? typeof docume
 			async getFile() {
 				return await mapOfFiles.get(this) || getFile.call(this)
 			},
+			async createWritable() {
+				const stream = new FileSystemWritableFileStream()
+
+				mapOfFiles.set(stream, mapOfFiles.get(this))
+
+				return stream
+			},
 		}),
 	})
+
+	class FileSystemWritableFileStream extends WritableStream {
+		constructor() {
+			_.set(super({
+				write: async (chunk) => {
+					const file = mapOfFiles.get(this)
+
+					_.set(this, new File([
+						file,
+						chunk instanceof Blob || chunk instanceof Uint8Array || typeof chunk === 'string'
+							? chunk
+							: ArrayBuffer.isView(chunk) || chunk instanceof ArrayBuffer
+								? new Uint8Array(chunk)
+								: chunk instanceof DataView
+									? new Uint8Array(chunk.buffer)
+									: new Uint8Array(new TextEncoder().encode(String(chunk))),
+					], file.name, {
+						type: file.type,
+						lastModified: file.lastModified,
+					}))
+				},
+			}), new File([], 'Untitled.txt', { type: 'text/plain' }))
+		}
+
+		async write(data) {
+			const writer = this.getWriter()
+
+			await writer.write(data)
+
+			writer.releaseLock()
+		}
+
+		async close() {
+			const file = mapOfFiles.get(this)
+			const url = URL.createObjectURL(file)
+
+			document.documentElement.append(a)
+
+			a.href = url
+			a.download = file.name
+			a.type = file.type
+
+			a.click()
+			a.remove()
+
+			URL.revokeObjectURL(url)
+		}
+	}
 
 	return {
 		showOpenFilePicker(options = null) {
@@ -61,5 +120,31 @@ export const showOpenFilePicker = globalThis.showOpenFilePicker ?? typeof docume
 
 			return new Promise(resolveFilePicker)
 		},
-	}.showOpenFilePicker
-})() : async () => []
+		async showSaveFilePicker(options = null) {
+			const accept = [].concat(
+				Object.entries(
+					Object(
+						[].concat(options?.types ?? [])[0]?.accept
+					)
+				)
+			)[0] || ["text/plain", [".txt"]]
+
+			return getFileHandle(
+				new File(
+					[],
+					options?.suggestedName ?? 'Untitled' + (accept?.[1]?.[0] || '.txt'),
+					{
+						type: accept?.[0] || 'text/plain'
+					}
+				)
+			)
+		},
+	}
+})() : {
+	async showOpenFilePicker() {
+		return []
+	},
+	async showSaveFilePicker() {
+		return []
+	},
+}
