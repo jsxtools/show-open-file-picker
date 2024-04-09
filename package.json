@@ -2,7 +2,7 @@
 	"$schema": "https://json.schemastore.org/package.json",
 	"name": "show-open-file-picker",
 	"description": "A cross-browser ponyfill or polyfill for showOpenFilePicker",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"type": "module",
 	"license": "(MIT-0)",
 	"exports": {
