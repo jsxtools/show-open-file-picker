@@ -2,49 +2,32 @@
 	"$schema": "https://json.schemastore.org/package.json",
 	"name": "show-open-file-picker",
 	"description": "A cross-browser ponyfill or polyfill for showOpenFilePicker",
-	"version": "0.2.4",
+	"version": "0.3.0",
 	"type": "module",
 	"license": "(MIT-0)",
 	"exports": {
-		".": {
-			"default": "./showOpenFilePicker.js",
-			"require": "./showOpenFilePicker.cjs",
-			"types": "./showOpenFilePicker.d.ts"
-		},
-		"./showOpenFilePicker": {
-			"default": "./showOpenFilePicker.js",
-			"require": "./showOpenFilePicker.cjs",
-			"types": "./showOpenFilePicker.js"
-		},
-		"./showSaveFilePicker": {
-			"default": "./showOpenFilePicker.js",
-			"require": "./showOpenFilePicker.cjs",
-			"types": "./showOpenFilePicker.js"
-		},
-		"./polyfill": {
-			"default": "./polyfill.js"
-		},
-		"./package.json": "./package.json"
+		".": "./showOpenFilePicker.js",
+		"./polyfill": "./polyfill.js",
+		"./types": "./types.js"
 	},
 	"main": "showOpenFilePicker.js",
 	"types": "showOpenFilePicker.d.ts",
 	"typesVersions": {
 		"*": {
-			"showOpenFilePicker": ["showOpenFilePicker.d.ts"],
-			"showSaveFilePicker": ["showOpenFilePicker.d.ts"],
-			"polyfill": ["polyfill.d.ts"]
+			"polyfill": ["polyfill.d.ts"],
+			"types": ["types.d.ts"]
 		}
 	},
 	"unpkg": "polyfill.js",
 	"jsdelivr": "polyfill.js",
 	"sideEffects": true,
 	"files": [
-		"showOpenFilePicker.cjs",
+		"polyfill.d.ts",
+		"polyfill.js",
 		"showOpenFilePicker.d.ts",
 		"showOpenFilePicker.js",
-		"polyfill.js",
-		"polyfill.d.ts",
-		"types.d.ts"
+		"types.d.ts",
+		"types.js"
 	],
 	"keywords": [
 		"access",
@@ -55,17 +38,21 @@
 		"development",
 		"dialog",
 		"es6",
+		"esm",
 		"file",
 		"files",
 		"filesystem",
 		"javascript",
 		"js",
 		"open",
+		"pick",
 		"picker",
 		"platform",
 		"polyfill",
+		"save",
 		"show",
 		"showOpenFilePicker",
+		"showSaveFilePicker",
 		"standard",
 		"standards",
 		"support",

@@ -1,6 +1,6 @@
 # show-open-file-picker
 
-A cross-browser ponyfill or polyfill for `showOpenFilePicker()`.
+A cross-browser ponyfill or polyfill for `showOpenFilePicker()` and `showSaveFilePicker()`.
 
 The `showOpenFilePicker()` method shows a file picker that allows a user to
 select a file or multiple files and returns a handle for the file(s).
@@ -14,7 +14,7 @@ npm install show-open-file-picker
 ## Usage
 
 ```html
-<script src="https://jsdelivr.com/package/npm/show-open-file-picker"></script>
+<script src="https://cdn.jsdelivr.net/npm/show-open-file-picker/polyfill.js"></script>
 
 <button id="button">Show Open File Picker</button>
 
