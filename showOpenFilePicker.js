@@ -1,6 +1,6 @@
 /** @type {import('./showOpenFilePicker.d.ts').Ponyfills} */
 export const { showOpenFilePicker, showSaveFilePicker } = typeof document === 'object' ? (() => {
-	if (globalThis.showOpenFilePicker) return globalThis.showOpenFilePicker
+	if (globalThis.showOpenFilePicker) return globalThis
 
 	const mapOfFiles = new WeakMap()
 	const prototypeOfFileSystemHandle = FileSystemHandle.prototype
