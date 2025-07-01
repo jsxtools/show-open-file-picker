@@ -3,7 +3,7 @@ export interface ShowOpenFilePickerOptions {
 	excludeAcceptAllOption?: boolean
 
 	/** An ID to be associated with the directory. If the same ID is used for another picker, it will open the same directory. */
-	id?: boolean
+	id?: string
 
 	/** A boolean that indicates whether the user can select multiple files. By default, this is `false`. */
 	multiple?: boolean
@@ -20,7 +20,7 @@ export interface ShowSaveFilePickerOptions {
 	excludeAcceptAllOption?: boolean
 
 	/** An ID to be associated with the directory. If the same ID is used for another picker, it will open the same directory. */
-	id?: boolean
+	id?: string
 
 	/** A well known directory ("desktop", "downloads") or `FileSystemHandle` to open the dialog in. */
 	startIn?: string | FileSystemDirectoryHandle
@@ -58,16 +58,24 @@ export interface FileSystemFileHandle {
 	getFile(): Promise<File>
 
 	/** A method that creates a writable stream for the file. */
-	createWritable(): Promise<FileSystemWritableFileStream>
+	createWritable(options?: FileSystemCreateWritableOptions): Promise<FileSystemWritableFileStream>
 
 	/** A boolean that indicates whether the handle is for a directory. */
-	isDirectory: boolean
+	readonly isDirectory: boolean
 
 	/** A property that indicates whether the handle is for a file. */
-	isFile: boolean
+	readonly isFile: boolean
 
-	/** A method that returns the name of the file. */
-	name: string
+	/** The name of the file. */
+	readonly name: string
+
+	/** The kind of handle ('file' or 'directory'). */
+	readonly kind: 'file'
+}
+
+export interface FileSystemCreateWritableOptions {
+	/** Whether to keep the existing data and write on top of it (true) or start with an empty file (false). */
+	keepExistingData?: boolean
 }
 
 export interface FileSystemWritableFileStream {

@@ -3,14 +3,16 @@ export const { showOpenFilePicker, showSaveFilePicker } = typeof document === 'o
 	if (globalThis.showOpenFilePicker) return globalThis
 
 	const mapOfFiles = new WeakMap()
-	const prototypeOfFileSystemHandle = FileSystemHandle.prototype
-	const prototypeOfFileSystemFileHandle = FileSystemFileHandle.prototype
+	const {
+		FileSystemHandle = class FileSystemHandle {},
+		FileSystemFileHandle = class FileSystemFileHandle extends FileSystemHandle {},
+	} = globalThis
 
 	const input = document.createElement('input')
 	const a = document.createElement('a')
 
 	const getFileHandle = file => {
-		const fileHandle = create(prototypeOfFileSystemFileHandle)
+		const fileHandle = create(FileSystemFileHandle.prototype)
 
 		mapOfFiles.set(fileHandle, file)
 
@@ -34,12 +36,12 @@ export const { showOpenFilePicker, showSaveFilePicker } = typeof document === 'o
 	}
 
 	const { create, defineProperties, getOwnPropertyDescriptors, values } = Object
-	const { name, kind, ...descriptorsOfFileSystemHandle } = getOwnPropertyDescriptors(prototypeOfFileSystemHandle)
-	const { getFile, ...descriptorsOfFileSystemFileHandle } = getOwnPropertyDescriptors(prototypeOfFileSystemFileHandle)
+	const { name, kind, ...descriptorsOfFileSystemHandle } = getOwnPropertyDescriptors(FileSystemHandle.prototype)
+	const { getFile, ...descriptorsOfFileSystemFileHandle } = getOwnPropertyDescriptors(FileSystemFileHandle.prototype)
 
 	input.type = 'file'
 
-	defineProperties(prototypeOfFileSystemHandle, {
+	defineProperties(FileSystemHandle.prototype, {
 		...descriptorsOfFileSystemHandle,
 		...getOwnPropertyDescriptors({
 			get name() {
@@ -51,7 +53,7 @@ export const { showOpenFilePicker, showSaveFilePicker } = typeof document === 'o
 		}),
 	})
 
-	defineProperties(prototypeOfFileSystemFileHandle, {
+	defineProperties(FileSystemFileHandle.prototype, {
 		...descriptorsOfFileSystemFileHandle,
 		...getOwnPropertyDescriptors({
 			async getFile() {
@@ -69,11 +71,11 @@ export const { showOpenFilePicker, showSaveFilePicker } = typeof document === 'o
 
 	class FileSystemWritableFileStream extends WritableStream {
 		constructor() {
-			_.set(super({
+			mapOfFiles.set(super({
 				write: async (chunk) => {
 					const file = mapOfFiles.get(this)
 
-					_.set(this, new File([
+					mapOfFiles.set(this, new File([
 						file,
 						chunk instanceof Blob || chunk instanceof Uint8Array || typeof chunk === 'string'
 							? chunk

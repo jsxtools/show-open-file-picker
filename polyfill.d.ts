@@ -9,5 +9,5 @@ declare global {
 	function showSaveFilePicker(
 		/** An object containing options that control the file picker's behavior. */
 		options?: ShowSaveFilePickerOptions
-	): Promise<FileSystemFileHandle[]>
+	): Promise<FileSystemFileHandle>
 }
